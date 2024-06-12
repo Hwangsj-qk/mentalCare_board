@@ -1,5 +1,6 @@
 package Board.Comment;
 
+import Board.Content.Content;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,5 +28,27 @@ public class Comment {
     private String comment_detail;
     private Date comment_date;
 
+    private Content content;
+
+    // 엔티티 -> DTO 변환 메서드
+    public CommentDTO toDTO() {
+        // 댓글에 게시글 ID가 없는 경우
+        Long contentId = 0L;
+        if(content != null) {
+            contentId = content.getContent_id();
+        }
+        return new CommentDTO(comment_id, user_id, content_id, comment_detail, comment_date);
+    }
+
+    public static Comment createComment(CommentDTO dto) {
+        Comment comment = new Comment();
+        comment.setComment_id(dto.getComment_id());
+        comment.setUser_id(dto.getUser_id());
+
+        Content content = new Content();
+        content.setUser_id(dto.getUser_id());
+
+        return comment;
+    }
 
 }

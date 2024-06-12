@@ -1,12 +1,10 @@
 package Board.Comment;
 
 import Board.Content.Content;
-import Board.Content.ContentDTO;
 import Board.Content.ContentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -19,56 +17,51 @@ public class CommentService {
     @Autowired
     private ContentRepository contentRepository;
 
-    public List<ContentDTO> getAllComments() {
-        List<Content> contents = contentRepository.findAll();
-
-        return contents.stream().map(Content::toDTO).toList();
+    // 엔티티 -> DTO로 변환하여 전달
+    public List<CommentDTO> getAllComments() {
+        List<Comment> comments = commentRepository.findAll();
+        return comments.stream().map(Comment::toDTO).toList();
     }
 
-    // 조회(일부 게시글) -> 이 기능이 필요한 지 생각해보기
-    public ContentDTO getContentById(Long content_id) {
-        Content content = contentRepository.findById(content_id).orElse(null);
-        // DTO로 변환
-        if(content != null) {
-            return content.toDTO();
-        } else {
-            return null;
-        }
+    public CommentDTO getCommentById(Long comment_id) {
+        Comment comment = commentRepository.findById(comment_id).orElse(null);
+        return comment.toDTO();
     }
 
-    // 게시글 생성
     @Transactional
-    public ContentDTO createContent(@RequestBody ContentDTO dto) {
-        Content saved = contentRepository.save(dto.toEntity());
+    public CommentDTO createComment(CommentDTO dto) {
+        Content content = contentRepository.findById(dto.getContent_id()).orElse(null);
+        if(content == null) {
+            throw new RuntimeException("존재하지 않은 Content");
+        }
+
+        Comment comment = dto.toEntity(content);
+
+        Comment saved = commentRepository.save(comment);
         return saved.toDTO();
     }
 
-    // 게시글 수정 (제목과 게시글 내용만 변경 가능)
     @Transactional
-    public ContentDTO updateContent(Long content_id, ContentDTO updateContent) {
-        Content content = contentRepository.findById(content_id).orElse(null);
-        if (content != null) {
-            // 게시글 제목 변경
-            if (content.getContent_title() != null) {
-                content.setContent_title(updateContent.getContent_title());
+    public CommentDTO updateComment(Long comment_id, CommentDTO updateComment) {
+        Comment comment = commentRepository.findById(comment_id).orElse(null);
+
+        if(comment != null) {
+            if(updateComment.getComment_detail() != null) {
+                comment.setComment_detail(updateComment.getComment_detail());
             }
-            // 게시글 내용 변경
-            if (content.getContent_detail() != null) {
-                content.setContent_detail(updateContent.getContent_detail());
-            }
-            // 글 작성자는 바꿀 수 없도록 함
-            return contentRepository.save(content).toDTO();
+
+            Comment saved = commentRepository.save(comment);
+            return saved.toDTO();
         } else {
             return null;
         }
     }
 
-    // 게시글 삭제
     @Transactional
-    public Boolean DeleteContent(Long content_id) {
-        Content content = contentRepository.findById(content_id).orElse(null);
-        if(content != null) {
-            contentRepository.delete(content);
+    public Boolean deleteComment(Long comment_id) {
+        Comment comment = commentRepository.findById(comment_id).orElse(null);
+        if(comment != null) {
+            commentRepository.delete(comment);
             return true;
         } else {
             return false;
