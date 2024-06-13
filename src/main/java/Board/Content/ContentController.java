@@ -1,6 +1,6 @@
 package Board.Content;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +9,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contents")
+@RequiredArgsConstructor
 public class ContentController {
 
-    @Autowired
+
     private ContentService contentService;
 
     // Insert (게시글 생성)
@@ -50,6 +51,21 @@ public class ContentController {
             return ResponseEntity.notFound().build();
         }
             return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("user_id/{user_id}")
+    public List<ContentDTO> getContentByUser(@PathVariable String user_id) {
+        return contentService.getContentByUser(user_id);
+    }
+
+    @GetMapping("content_detail/{content_detail}")
+    public List<ContentDTO> getContentByDetailContaining(@PathVariable String content_detail) {
+        return contentService.getContentByDetailContaining(content_detail);
+    }
+
+    @GetMapping("content_title/{content_title}")
+    public List<ContentDTO> getContentByTitleContaining(@PathVariable String content_title) {
+        return contentService.getContentByTitleContaining(content_title);
     }
 
 }

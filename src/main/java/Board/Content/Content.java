@@ -29,6 +29,7 @@ public class Content {
     private Date content_date;
     private String content_detail;
 
+    // 1 대 다 관계 (content - comment) -> 양방향 관계가 아니면 굳이 필요 없음
     @OneToMany(mappedBy = "content", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
@@ -38,7 +39,6 @@ public class Content {
             commentDTOList = comments.stream().map(Comment::toDTO).toList();
         }
         return new ContentDTO(content_id, content_tag, content_title, user_id, content_date, content_detail, commentDTOList);
-
     }
 
     // 엔티티 -> DTO 변환 메서드

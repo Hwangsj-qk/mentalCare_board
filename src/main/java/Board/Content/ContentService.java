@@ -73,4 +73,22 @@ public class ContentService {
         }
     }
 
+    // 저자를 통해 게시글 찾기
+    public List<ContentDTO> getContentByUser(String user_id) {
+        List<Content> contentList = contentRepository.findByUser(user_id);
+        return contentList.stream().map(Content::toDTO).toList();
+    }
+
+    // 포함된 글자를 통해 게시글 찾기
+    public List<ContentDTO> getContentByDetailContaining(String content_detail) {
+        List<Content> contentList = contentRepository.findByDetailContaining(content_detail);
+        return contentList.stream().map(Content::toDTO).toList();
+    }
+
+    // 제목에 포함된 글자를 통해 게시글 찾기
+    public List<ContentDTO> getContentByTitleContaining(String content_title) {
+        List<Content> contentList = contentRepository.findByTitleContaining(content_title);
+        return contentList.stream().map(Content::toDTO).toList();
+    }
+
 }

@@ -1,10 +1,7 @@
 package Board.Comment;
 
 import Board.Content.Content;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +25,9 @@ public class Comment {
     private String comment_detail;
     private Date comment_date;
 
+    // 1 대 다 관계
+    @ManyToOne
+    @JoinColumn(name = "content_id")
     private Content content;
 
     // 엔티티 -> DTO 변환 메서드
