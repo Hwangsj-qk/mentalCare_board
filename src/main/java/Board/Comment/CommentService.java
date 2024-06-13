@@ -2,6 +2,7 @@ package Board.Comment;
 
 import Board.Content.Content;
 import Board.Content.ContentRepository;
+import Board.user.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class CommentService {
 
     @Autowired
     private ContentRepository contentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // 엔티티 -> DTO로 변환하여 전달
     public List<CommentDTO> getAllComments() {
@@ -67,4 +71,6 @@ public class CommentService {
             return false;
         }
     }
+
+
 }
