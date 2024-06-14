@@ -1,5 +1,6 @@
-package Board.Content;
+package com.busanit.mentalCare.repository;
 
+import com.busanit.mentalCare.model.Content;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

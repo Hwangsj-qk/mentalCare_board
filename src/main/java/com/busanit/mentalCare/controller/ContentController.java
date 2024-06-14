@@ -1,5 +1,7 @@
-package Board.Content;
+package com.busanit.mentalCare.controller;
 
+import com.busanit.mentalCare.service.ContentService;
+import com.busanit.mentalCare.dto.ContentDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

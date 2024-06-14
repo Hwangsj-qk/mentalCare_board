@@ -1,5 +1,7 @@
-package Board.Comment;
+package com.busanit.mentalCare.controller;
 
+import com.busanit.mentalCare.service.CommentService;
+import com.busanit.mentalCare.dto.CommentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

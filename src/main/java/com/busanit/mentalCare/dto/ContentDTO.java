@@ -1,7 +1,8 @@
-package Board.Content;
+package com.busanit.mentalCare.dto;
 
-import Board.Comment.Comment;
-import Board.Comment.CommentDTO;
+import com.busanit.mentalCare.model.Comment;
+import com.busanit.mentalCare.model.Content;
+import com.busanit.mentalCare.model.TagType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

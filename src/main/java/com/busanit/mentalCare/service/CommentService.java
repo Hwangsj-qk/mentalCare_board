@@ -1,11 +1,14 @@
-package Board.Comment;
+package com.busanit.mentalCare.service;
 
-import Board.Content.Content;
-import Board.Content.ContentRepository;
-import Board.user.UserRepository;
+import com.busanit.mentalCare.repository.CommentRepository;
+import com.busanit.mentalCare.model.Content;
+import com.busanit.mentalCare.repository.ContentRepository;
+import com.busanit.mentalCare.dto.CommentDTO;
 import jakarta.transaction.Transactional;
+import com.busanit.mentalCare.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.busanit.mentalCare.repository.UserRepository;
 
 import java.util.List;
 
