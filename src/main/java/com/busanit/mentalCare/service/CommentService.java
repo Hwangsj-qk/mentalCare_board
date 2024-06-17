@@ -1,14 +1,13 @@
 package com.busanit.mentalCare.service;
 
-import com.busanit.mentalCare.repository.CommentRepository;
-import com.busanit.mentalCare.model.Content;
-import com.busanit.mentalCare.repository.ContentRepository;
 import com.busanit.mentalCare.dto.CommentDTO;
+import com.busanit.mentalCare.entity.Board;
+import com.busanit.mentalCare.entity.Comment;
+import com.busanit.mentalCare.repository.BoardRepository;
+import com.busanit.mentalCare.repository.CommentRepository;
 import jakarta.transaction.Transactional;
-import com.busanit.mentalCare.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.busanit.mentalCare.repository.UserRepository;
 
 import java.util.List;
 
@@ -19,10 +18,9 @@ public class CommentService {
     private CommentRepository commentRepository;
 
     @Autowired
-    private ContentRepository contentRepository;
+    private BoardRepository boardRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+
 
     // 엔티티 -> DTO로 변환하여 전달
     public List<CommentDTO> getAllComments() {
@@ -30,20 +28,19 @@ public class CommentService {
         return comments.stream().map(Comment::toDTO).toList();
     }
 
-    public CommentDTO getCommentById(Long comment_id) {
-        Comment comment = commentRepository.findById(comment_id).orElse(null);
-        return comment.toDTO();
-    }
+//    public CommentDTO getCommentById(Long comment_id) {
+//        Comment comment = commentRepository.findById(comment_id).orElse(null);
+//        return comment.toDTO();
+//    }
 
     @Transactional
     public CommentDTO createComment(CommentDTO dto) {
-        Content content = contentRepository.findById(dto.getContent_id()).orElse(null);
-        if(content == null) {
-            throw new RuntimeException("존재하지 않은 Content");
+        Board board = boardRepository.findById(dto.getBoard_id()).orElse(null);
+        if(board == null) {
+            throw new RuntimeException("존재하지 않은 게시판");
         }
 
-        Comment comment = dto.toEntity(content);
-
+        Comment comment = dto.toEntity(board);
         Comment saved = commentRepository.save(comment);
         return saved.toDTO();
     }
@@ -53,8 +50,8 @@ public class CommentService {
         Comment comment = commentRepository.findById(comment_id).orElse(null);
 
         if(comment != null) {
-            if(updateComment.getComment_detail() != null) {
-                comment.setComment_detail(updateComment.getComment_detail());
+            if(updateComment.getComment_content() != null) {
+                comment.setComment_content(updateComment.getComment_content());
             }
 
             Comment saved = commentRepository.save(comment);
@@ -74,6 +71,9 @@ public class CommentService {
             return false;
         }
     }
+
+
+
 
 
 }

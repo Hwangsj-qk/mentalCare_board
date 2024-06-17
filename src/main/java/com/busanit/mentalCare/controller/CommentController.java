@@ -1,7 +1,7 @@
 package com.busanit.mentalCare.controller;
 
-import com.busanit.mentalCare.service.CommentService;
 import com.busanit.mentalCare.dto.CommentDTO;
+import com.busanit.mentalCare.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +16,11 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping
-    public ResponseEntity<List<CommentDTO>> getAllComment() {
-        List<CommentDTO> allComments = commentService.getAllComments();
-        return ResponseEntity.ok(allComments);
-    }
-
-    @GetMapping("{id}")
-    public ResponseEntity<CommentDTO> getCommentById(@PathVariable Long comment_id) {
-        CommentDTO comment = commentService.getCommentById(comment_id);
-        if(comment != null) {
+    // 수정 기능
+    @PutMapping("/{comment_id}")
+    ResponseEntity<CommentDTO> updateComment(@PathVariable Long comment_id, @RequestBody CommentDTO updatedComment) {
+        CommentDTO comment = commentService.updateComment(comment_id, updatedComment);
+        if(comment == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(comment);
@@ -37,22 +32,19 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CommentDTO> updateComment (@PathVariable Long comment_id, @RequestBody CommentDTO updateComment) {
-        CommentDTO comment = commentService.updateComment(comment_id, updateComment);
 
-        if(comment != null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(comment);
-    }
-
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{comment_id}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long comment_id) {
         if(!commentService.deleteComment(comment_id)) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CommentDTO>> getAllComments() {
+        List<CommentDTO> allComments = commentService.getAllComments();
+        return ResponseEntity.ok(allComments);
     }
 
 
