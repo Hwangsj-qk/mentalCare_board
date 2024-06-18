@@ -2,6 +2,7 @@ package com.busanit.mentalCare.dto;
 
 import com.busanit.mentalCare.entity.Board;
 import com.busanit.mentalCare.entity.Comment;
+import com.busanit.mentalCare.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,20 +11,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentDTO {
-    private Long comment_id;
-    private String comment_content;
-    private String comment_date;
-    private Long user_id;
-    private Long board_id;
+    private Long commentId;
+    private String commentContent;
+    private String commentTime;
+    private String userNickname;
+    private Long boardId;
 
 
 
-    public Comment toEntity(Board board) {
+    public Comment toEntity(Board board, User user) {
         return Comment.builder()
-                .comment_id(comment_id)
-                .comment_content(comment_content)
-                .comment_time(comment_date)
-                .user_id(user_id)
+                .commentId(commentId)
+                .commentContent(commentContent)
+                .commentTime(commentTime)
+                .user(user)
                 .board(board)
                 .build();
     }

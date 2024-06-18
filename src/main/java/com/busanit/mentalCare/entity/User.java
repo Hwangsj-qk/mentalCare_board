@@ -1,13 +1,11 @@
 package com.busanit.mentalCare.entity;
 
-import com.busanit.mentalCare.dto.Mc_userDto;
+import com.busanit.mentalCare.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 @Builder
 @Data
@@ -15,37 +13,39 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "mc_user")
-public class Mc_user {
+public class User {
     @Id
-    private String user_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
 
     @Column(nullable = false)
-    private String user_pw;
+    private String userPw;
 
     @Column(nullable = false)
-    private String user_nickname;
+    private String userNickname;
 
     @Column(nullable = true)
-    private char user_gender;
+    private char userGender;
 
     @Column(nullable = false)
-    private int user_age;
+    private int userAge;
 
     @Column(nullable = false)
-    private String user_email;
+    private String userEmail;
 
     @Column(nullable = false)
-    private String user_phonenumber;
+    private String userPhonenumber;
 
-    @Column(nullable = false)
-    private String user_joindate;
+
+    //@Column(nullable = false)
+    //private String user_joindate;
 
 //    @Column(nullable = false)
 //    private boolean user_secession;
 
     // 엔티티 -> DTO 변환 메서드
-    public Mc_userDto toDto() {
-        return new Mc_userDto(user_id, user_pw, user_nickname, user_gender, user_age, user_email, user_phonenumber, user_joindate);
+    public UserDto toDto() {
+        return new UserDto(userId, userPw, userNickname, userGender, userAge, userEmail, userPhonenumber);
     }
 
 }

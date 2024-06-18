@@ -25,19 +25,19 @@ public class BoardController {
 
 
     // select (게시글 검색) - 커스텀 메서드
-    @GetMapping("user_id/{user_id}")
-    public List<BoardDTO> getContentByUserId(@PathVariable Long user_id) {
-        return boardService.getBoardByUserId(user_id);
+    @GetMapping("userNickname/{userNickname}")
+    public List<BoardDTO> getBoardByUserNickName(@PathVariable("userNickname") String userNickName) {
+        return boardService.getBoardByUserNickName(userNickName);
     }
 
-    @GetMapping("board_content/{board_content}")
-    public List<BoardDTO> getBoardByContentContaining(@PathVariable String board_content) {
-        return boardService.getBoardByContentContaining(board_content);
+    @GetMapping("content/{boardContent}")
+    public List<BoardDTO> getBoardByBoardContaining(@PathVariable String boardContent) {
+        return boardService.getBoardByContentContaining(boardContent);
     }
 
-    @GetMapping("board_title/{board_title}")
-    public List<BoardDTO> getBoardByTitleContaining(@PathVariable String board_title) {
-        return boardService.getBoardByTitleContaining(board_title);
+    @GetMapping("title/{boardTitle}")
+    public List<BoardDTO> getBoardByTitleContaining(@PathVariable String boardTitle) {
+        return boardService.getBoardByTitleContaining(boardTitle);
     }
 
     @GetMapping
@@ -48,9 +48,9 @@ public class BoardController {
 
 
     // update (게시글 수정)
-    @PutMapping("/{board_id}")
-    public ResponseEntity<BoardDTO> updateBoard(@PathVariable Long board_id, @RequestBody BoardDTO updateBoard) {
-        BoardDTO board = boardService.updateBoard(board_id, updateBoard);
+    @PutMapping("update/{boardId}")
+    public ResponseEntity<BoardDTO> updateBoard(@PathVariable Long boardId, @RequestBody BoardDTO updateBoard) {
+        BoardDTO board = boardService.updateBoard(boardId, updateBoard);
 
         if(board == null) {
             return ResponseEntity.notFound().build();
@@ -59,22 +59,13 @@ public class BoardController {
     }
 
     // DELETE (게시글 삭제)
-    @DeleteMapping("/{board_id}")
-    public ResponseEntity<Void> deleteBoard(@PathVariable Long board_id) {
-        if(!boardService.DeleteBoard(board_id)) {
+    @DeleteMapping("delete/{boardId}")
+    public ResponseEntity<Void> deleteBoard(@PathVariable Long boardId) {
+        if(!boardService.DeleteBoard(boardId)) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().build();
     }
 
-
-
-
-
-//    // 공감에 대한 기능 (공감 삽입/ 공감 취소)
-//    @GetMapping("/{board_heart}")
-//    public List<BoardDTO> updateHeartCount(@PathVariable String board_id, boolean b ) {
-//        return boardService.updateCountJPQL(board_id, b);
-//    }
 
 }

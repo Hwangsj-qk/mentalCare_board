@@ -18,18 +18,19 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id", nullable = false)
-    private Long comment_id;
+    private Long commentId;
 
     //@ManyToOne
     // @JoinColumn(name = "user_id")
-    @Column(name = "user_id")
-    private Long user_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "comment_content")
-    private String comment_content;
+    private String commentContent;
 
     @Column(name = "comment_time")
-    private String comment_time;
+    private String commentTime;
 
     // 다 대 1 관계
     @ManyToOne
@@ -56,10 +57,10 @@ public class Comment {
         // 댓글에 게시글 ID가 없는 경우
         Long boardId = 0L;
         if(board != null) {
-            boardId = board.getBoard_id();
+            boardId = board.getBoardId();
         }
 
-        return new CommentDTO(comment_id, comment_content, comment_time,user_id, boardId);
+        return new CommentDTO(commentId, commentContent, commentTime, user.getUserNickname(), boardId);
 
     }
 

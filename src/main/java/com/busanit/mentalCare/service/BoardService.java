@@ -1,9 +1,11 @@
 package com.busanit.mentalCare.service;
 
 import com.busanit.mentalCare.entity.Board;
+import com.busanit.mentalCare.entity.User;
 import com.busanit.mentalCare.repository.CommentRepository;
 import com.busanit.mentalCare.repository.BoardRepository;
 import com.busanit.mentalCare.dto.BoardDTO;
+import com.busanit.mentalCare.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class BoardService {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     // 모든 게시글 조회
     public List<BoardDTO> getAllBoards() {
         List<Board> boards = boardRepository.findAll();
@@ -31,7 +36,11 @@ public class BoardService {
     // 게시글 생성
     @Transactional
     public BoardDTO createBoard(@RequestBody BoardDTO dto) {
-        Board saved = boardRepository.save(dto.toEntity());
+        User user = userRepository.findByUserNickname(dto.getUserNickname());
+        System.out.println(user);
+        System.out.println("board entity:"+ dto.toEntity(user));
+
+        Board saved = boardRepository.save(dto.toEntity(user));
         return saved.toDTO();
     }
 
@@ -41,12 +50,12 @@ public class BoardService {
         Board board = boardRepository.findById(board_id).orElse(null);
         if (board != null) {
             // 게시글 제목 변경
-            if (board.getBoard_title() != null) {
-                board.setBoard_title(updateBoard.getBoard_title());
+            if (board.getBoardTitle() != null) {
+                board.setBoardTitle(updateBoard.getBoardTitle());
             }
             // 게시글 내용 변경
-            if (board.getBoard_content() != null) {
-                board.setBoard_content(updateBoard.getBoard_content());
+            if (board.getBoardContent() != null) {
+                board.setBoardContent(updateBoard.getBoardContent());
             }
             // 글 작성자는 바꿀 수 없도록 함
             return boardRepository.save(board).toDTO();
@@ -68,22 +77,29 @@ public class BoardService {
     }
 
     // 저자를 통해 게시글 찾기
-    public List<BoardDTO> getBoardByUserId(Long user_id) {
-        List<Board> boardList = boardRepository.findByUserId(user_id);
+    public List<BoardDTO> getBoardByUserNickName(String userNickname) {
+        List<Board> boardList = boardRepository.findByUserUserNickname(userNickname);
         return boardList.stream().map(Board::toDTO).toList();
     }
 
     // 포함된 글자를 통해 게시글 찾기
-    public List<BoardDTO> getBoardByContentContaining(String board_content) {
-        List<Board> boardList = boardRepository.findByBoardContaining(board_content);
+    public List<BoardDTO> getBoardByContentContaining(String boardContent) {
+        List<Board> boardList = boardRepository.findByBoardContentContaining(boardContent);
         return boardList.stream().map(Board::toDTO).toList();
     }
 
     // 제목에 포함된 글자를 통해 게시글 찾기
-    public List<BoardDTO> getBoardByTitleContaining(String board_title) {
-        List<Board> boardList = boardRepository.findByTitleContaining(board_title);
+    public List<BoardDTO> getBoardByTitleContaining(String boardTitle) {
+        List<Board> boardList = boardRepository.findByBoardTitleContaining(boardTitle);
         return boardList.stream().map(Board::toDTO).toList();
     }
+
+    public Board findBoardId(Long boardId) {
+        Board board = boardRepository.findById(boardId).orElse(null);
+        return board;
+    }
+
+
 
 //    public List<BoardDTO> updateCountJPQL(String board_id, boolean b) {
 //        List<Board> boardList;

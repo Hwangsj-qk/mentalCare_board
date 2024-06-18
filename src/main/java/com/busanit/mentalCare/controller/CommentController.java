@@ -17,9 +17,9 @@ public class CommentController {
     private CommentService commentService;
 
     // 수정 기능
-    @PutMapping("/{comment_id}")
-    ResponseEntity<CommentDTO> updateComment(@PathVariable Long comment_id, @RequestBody CommentDTO updatedComment) {
-        CommentDTO comment = commentService.updateComment(comment_id, updatedComment);
+    @PutMapping("/{commentId}")
+    ResponseEntity<CommentDTO> updateComment(@PathVariable Long commentId, @RequestBody CommentDTO updatedComment) {
+        CommentDTO comment = commentService.updateComment(commentId, updatedComment);
         if(comment == null) {
             return ResponseEntity.notFound().build();
         }
@@ -33,9 +33,9 @@ public class CommentController {
     }
 
 
-    @DeleteMapping("/{comment_id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long comment_id) {
-        if(!commentService.deleteComment(comment_id)) {
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+        if(!commentService.deleteComment(commentId)) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().build();
@@ -46,9 +46,5 @@ public class CommentController {
         List<CommentDTO> allComments = commentService.getAllComments();
         return ResponseEntity.ok(allComments);
     }
-
-
-
-
 
 }

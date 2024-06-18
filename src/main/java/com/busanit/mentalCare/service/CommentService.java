@@ -3,8 +3,10 @@ package com.busanit.mentalCare.service;
 import com.busanit.mentalCare.dto.CommentDTO;
 import com.busanit.mentalCare.entity.Board;
 import com.busanit.mentalCare.entity.Comment;
+import com.busanit.mentalCare.entity.User;
 import com.busanit.mentalCare.repository.BoardRepository;
 import com.busanit.mentalCare.repository.CommentRepository;
+import com.busanit.mentalCare.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class CommentService {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
 
@@ -35,12 +40,13 @@ public class CommentService {
 
     @Transactional
     public CommentDTO createComment(CommentDTO dto) {
-        Board board = boardRepository.findById(dto.getBoard_id()).orElse(null);
+        Board board = boardRepository.findById(dto.getBoardId()).orElse(null);
+        User user = userRepository.findByUserNickname(dto.getUserNickname());
         if(board == null) {
             throw new RuntimeException("존재하지 않은 게시판");
         }
 
-        Comment comment = dto.toEntity(board);
+        Comment comment = dto.toEntity(board, user);
         Comment saved = commentRepository.save(comment);
         return saved.toDTO();
     }
@@ -50,8 +56,8 @@ public class CommentService {
         Comment comment = commentRepository.findById(comment_id).orElse(null);
 
         if(comment != null) {
-            if(updateComment.getComment_content() != null) {
-                comment.setComment_content(updateComment.getComment_content());
+            if(updateComment.getCommentContent() != null) {
+                comment.setCommentContent(updateComment.getCommentContent());
             }
 
             Comment saved = commentRepository.save(comment);
