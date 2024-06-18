@@ -42,6 +42,10 @@ public class Board {
     @Column(name = "board_content")
     private String boardContent;
 
+    @Column(name = "comment_count")
+
+    private int commentCount;
+
     // 1 대 다 관계 (content - comment) -> 양방향 관계가 아니면 굳이 필요 없음
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
