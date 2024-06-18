@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,8 +18,8 @@ public class Mc_userDto {
     private int user_age;
     private String user_email;
     private String user_phonenumber;
-    private Date user_joindate;
-    private boolean user_secession;
+    private String user_joindate;
+    // private boolean user_secession;
 
     // DTO -> 엔티티 (엔티티에 @Builder 적용, 빌더 패턴 사용)
     public Mc_user toEntity() {
@@ -29,7 +31,7 @@ public class Mc_userDto {
                 .user_age(user_age)
                 .user_email(user_email)
                 .user_phonenumber(user_phonenumber)
-                .user_secession(user_secession)
+                // .user_secession(user_secession)
                 .build();
 
         return user;

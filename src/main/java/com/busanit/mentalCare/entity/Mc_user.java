@@ -1,5 +1,6 @@
 package com.busanit.mentalCare.entity;
 
+import com.busanit.mentalCare.dto.Mc_userDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +17,6 @@ import java.util.Date;
 @Table(name = "mc_user")
 public class Mc_user {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String user_id;
 
     @Column(nullable = false)
@@ -38,13 +38,14 @@ public class Mc_user {
     private String user_phonenumber;
 
     @Column(nullable = false)
-    private Date user_joindate;
+    private String user_joindate;
 
-    @Column(nullable = false)
-    private boolean user_secession;
+//    @Column(nullable = false)
+//    private boolean user_secession;
 
     // 엔티티 -> DTO 변환 메서드
     public Mc_userDto toDto() {
-        return new Mc_userDto(user_id, user_pw, user_nickname, user_gender, user_age, user_email, user_phonenumber, user_joindate, user_secession);
+        return new Mc_userDto(user_id, user_pw, user_nickname, user_gender, user_age, user_email, user_phonenumber, user_joindate);
     }
+
 }
