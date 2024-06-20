@@ -6,6 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Builder
 @Data
@@ -13,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "comment")
+@EntityListeners(AuditingEntityListener .class)
 public class Comment {
 
     @Id
@@ -29,8 +34,9 @@ public class Comment {
     @Column(name = "comment_content")
     private String commentContent;
 
+    @CreatedDate
     @Column(name = "comment_time")
-    private String commentTime;
+    private LocalDateTime commentTime;
 
     // 다 대 1 관계
     @ManyToOne

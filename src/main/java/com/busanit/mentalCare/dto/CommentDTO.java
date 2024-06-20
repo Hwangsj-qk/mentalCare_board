@@ -7,13 +7,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentDTO {
     private Long commentId;
     private String commentContent;
-    private String commentTime;
+    private LocalDateTime commentTime;
     private String userNickname;
     private Long boardId;
 

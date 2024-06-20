@@ -4,10 +4,12 @@ import com.busanit.mentalCare.entity.Board;
 import com.busanit.mentalCare.entity.Comment;
 import com.busanit.mentalCare.entity.User;
 import com.busanit.mentalCare.entity.TagType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 // DTO -> 데이터 전송객체
@@ -18,7 +20,9 @@ public class BoardDTO {
     private Long boardId;
     private TagType boardTag;
     private String boardTitle;
-    private String boardTime;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yy-MM-dd HH:mm:ss")
+    private LocalDateTime boardTime;
     private String boardContent;
     private String userNickname;
     private int boardLikeCount;

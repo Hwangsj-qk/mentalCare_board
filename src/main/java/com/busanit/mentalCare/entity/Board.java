@@ -8,7 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "board")
 public class Board {
 
@@ -35,16 +39,13 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-
+    @CreatedDate
     @Column(name = "board_time")
-    private String boardTime;
+    private LocalDateTime boardTime;
 
     @Column(name = "board_content")
     private String boardContent;
 
-    @Column(name = "comment_count")
-
-    private int commentCount;
 
     // 1 대 다 관계 (content - comment) -> 양방향 관계가 아니면 굳이 필요 없음
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -76,6 +77,5 @@ public class Board {
         board.setBoardTime(dto.getBoardTime());
         return board;
     }
-
 
 }

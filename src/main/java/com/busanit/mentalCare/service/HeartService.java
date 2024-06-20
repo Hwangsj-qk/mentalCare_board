@@ -30,7 +30,7 @@ public class HeartService {
             // heartRepository에 userId랑 boardId값 저장
             heartRepository.save(new Heart(user, board));
         } else {
-            board.setBoardLikeCount(board.getBoardLikeCount() - 1);
+            board.setBoardLikeCount(board.getBoardLikeCount()-1);
             heartRepository.deleteByUserAndBoard(user, board);
         }
     }

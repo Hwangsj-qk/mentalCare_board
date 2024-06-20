@@ -2,7 +2,9 @@ package com.busanit.mentalCare.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.FetchType.LAZY;
 
@@ -10,6 +12,7 @@ import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Data
+@NoArgsConstructor @AllArgsConstructor
 public class Heart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
