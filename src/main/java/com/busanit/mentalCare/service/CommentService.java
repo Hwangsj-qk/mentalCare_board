@@ -26,17 +26,13 @@ public class CommentService {
     private UserRepository userRepository;
 
 
-
     // 엔티티 -> DTO로 변환하여 전달
+    @Transactional
     public List<CommentDTO> getAllComments() {
         List<Comment> comments = commentRepository.findAll();
         return comments.stream().map(Comment::toDTO).toList();
     }
 
-//    public CommentDTO getCommentById(Long comment_id) {
-//        Comment comment = commentRepository.findById(comment_id).orElse(null);
-//        return comment.toDTO();
-//    }
 
     @Transactional
     public CommentDTO createComment(CommentDTO dto) {
@@ -47,14 +43,16 @@ public class CommentService {
         }
 
         Comment comment = dto.toEntity(board, user);
+        int boardCommentCount = comment.getBoard().getBoardCommentCount();
+        comment.getBoard().setBoardCommentCount(boardCommentCount + 1);
         Comment saved = commentRepository.save(comment);
+        //boardRepository.upCommentCount(saved.getBoard().getBoardId());
         return saved.toDTO();
     }
 
     @Transactional
-    public CommentDTO updateComment(Long comment_id, CommentDTO updateComment) {
+    public CommentDTO updateComment(Long comment_id,  CommentDTO updateComment) {
         Comment comment = commentRepository.findById(comment_id).orElse(null);
-
         if(comment != null) {
             if(updateComment.getCommentContent() != null) {
                 comment.setCommentContent(updateComment.getCommentContent());
@@ -72,11 +70,21 @@ public class CommentService {
         Comment comment = commentRepository.findById(comment_id).orElse(null);
         if(comment != null) {
             commentRepository.delete(comment);
+            int boardCommentCount = comment.getBoard().getBoardCommentCount();
+            comment.getBoard().setBoardCommentCount(boardCommentCount - 1);
             return true;
         } else {
             return false;
         }
     }
+
+
+
+
+
+
+
+
 
 
 

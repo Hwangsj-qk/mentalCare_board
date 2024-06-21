@@ -1,7 +1,8 @@
 package com.busanit.mentalCare.controller;
 
-import com.busanit.mentalCare.service.BoardService;
 import com.busanit.mentalCare.dto.BoardDTO;
+import com.busanit.mentalCare.entity.TagType;
+import com.busanit.mentalCare.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,11 @@ public class BoardController {
     @GetMapping("title/{boardTitle}")
     public List<BoardDTO> getBoardByTitleContaining(@PathVariable String boardTitle) {
         return boardService.getBoardByTitleContaining(boardTitle);
+    }
+
+    @GetMapping("TagType/{tagType}")
+    public List<BoardDTO> getBoardByTagType(@PathVariable TagType tagType) {
+        return boardService.getBoardByTagType(tagType);
     }
 
     @GetMapping

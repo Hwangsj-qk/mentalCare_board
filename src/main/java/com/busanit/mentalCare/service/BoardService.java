@@ -1,16 +1,19 @@
 package com.busanit.mentalCare.service;
 
-import com.busanit.mentalCare.entity.Board;
-import com.busanit.mentalCare.entity.User;
-import com.busanit.mentalCare.repository.CommentRepository;
-import com.busanit.mentalCare.repository.BoardRepository;
 import com.busanit.mentalCare.dto.BoardDTO;
+import com.busanit.mentalCare.entity.Board;
+import com.busanit.mentalCare.entity.TagType;
+import com.busanit.mentalCare.entity.Time;
+import com.busanit.mentalCare.entity.User;
+import com.busanit.mentalCare.repository.BoardRepository;
+import com.busanit.mentalCare.repository.CommentRepository;
 import com.busanit.mentalCare.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,11 +28,17 @@ public class BoardService {
     @Autowired
     private UserRepository userRepository;
 
+
     // 모든 게시글 조회
     public List<BoardDTO> getAllBoards() {
         List<Board> boards = boardRepository.findAll();
 
         return boards.stream().map(Board::toDTO).toList();
+    }
+
+    public List<BoardDTO> getBoardByTagType(TagType tag) {
+        List<Board> board = boardRepository.findByBoardTag(tag);
+        return board.stream().map(Board::toDTO).toList();
     }
 
 
@@ -41,6 +50,7 @@ public class BoardService {
         System.out.println("board entity:"+ dto.toEntity(user));
 
         Board saved = boardRepository.save(dto.toEntity(user));
+        saved.setCalculateTime(Time.getTimeDifference(saved.getBoardTime(), LocalDateTime.now()));
         return saved.toDTO();
     }
 
@@ -98,19 +108,5 @@ public class BoardService {
         Board board = boardRepository.findById(boardId).orElse(null);
         return board;
     }
-
-
-
-//    public List<BoardDTO> updateCountJPQL(String board_id, boolean b) {
-//        List<Board> boardList;
-//        if (b) {
-//            boardList = boardRepository.addCountJPQL(board_id);
-//        } else {
-//            boardList = boardRepository.subCountJPQL(board_id);
-//        }
-//        return boardList.stream().map(Board::toDTO).toList();
-//    }
-
-
 
 }

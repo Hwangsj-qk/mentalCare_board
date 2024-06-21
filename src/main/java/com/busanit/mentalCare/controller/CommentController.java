@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/comments")
+@RequestMapping("/comment")
 @RestController
 public class CommentController {
 
@@ -18,7 +18,7 @@ public class CommentController {
 
     // 수정 기능
     @PutMapping("/{commentId}")
-    ResponseEntity<CommentDTO> updateComment(@PathVariable Long commentId, @RequestBody CommentDTO updatedComment) {
+    ResponseEntity<CommentDTO> updateComment(@PathVariable Long commentId,  @RequestBody CommentDTO updatedComment) {
         CommentDTO comment = commentService.updateComment(commentId, updatedComment);
         if(comment == null) {
             return ResponseEntity.notFound().build();

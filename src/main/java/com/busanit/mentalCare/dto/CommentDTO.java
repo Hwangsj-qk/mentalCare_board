@@ -3,6 +3,7 @@ package com.busanit.mentalCare.dto;
 import com.busanit.mentalCare.entity.Board;
 import com.busanit.mentalCare.entity.Comment;
 import com.busanit.mentalCare.entity.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,8 @@ import java.time.LocalDateTime;
 public class CommentDTO {
     private Long commentId;
     private String commentContent;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yy-MM-dd HH:mm:ss")
     private LocalDateTime commentTime;
     private String userNickname;
     private Long boardId;
