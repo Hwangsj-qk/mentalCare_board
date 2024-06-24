@@ -34,6 +34,8 @@ public class CommentService {
     }
 
 
+
+
     @Transactional
     public CommentDTO createComment(CommentDTO dto) {
         Board board = boardRepository.findById(dto.getBoardId()).orElse(null);
@@ -46,7 +48,6 @@ public class CommentService {
         int boardCommentCount = comment.getBoard().getBoardCommentCount();
         comment.getBoard().setBoardCommentCount(boardCommentCount + 1);
         Comment saved = commentRepository.save(comment);
-        //boardRepository.upCommentCount(saved.getBoard().getBoardId());
         return saved.toDTO();
     }
 
@@ -77,6 +78,9 @@ public class CommentService {
             return false;
         }
     }
+
+
+
 
 
 

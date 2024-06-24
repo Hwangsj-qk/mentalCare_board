@@ -1,5 +1,6 @@
 package com.busanit.mentalCare.entity;
 
+import com.busanit.mentalCare.dto.ChildrenCommentDTO;
 import com.busanit.mentalCare.dto.CommentDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Data
@@ -44,6 +47,10 @@ public class Comment {
     private Board board;
 
 
+    @OneToMany(mappedBy = "comment", orphanRemoval = true)
+    private List<ChildrenComment> childrenComments;
+
+
     // 엔티티 -> DTO 변환 메서드 (user에 대해서 선생님께 여쭤보기)
     public CommentDTO toDTO() {
         // 댓글에 게시글 ID가 없는 경우
@@ -52,7 +59,12 @@ public class Comment {
             boardId = board.getBoardId();
         }
 
-        return new CommentDTO(commentId, commentContent, commentTime, user.getUserNickname(), boardId);
+        // 댓글에 대한 답글
+        List<ChildrenCommentDTO> childrenDTOList = new ArrayList<>();
+        if(childrenComments != null) {
+            childrenDTOList = childrenComments.stream().map(ChildrenComment::toDTO).toList();
+        }
+        return new CommentDTO(commentId, commentContent, commentTime, user.getUserNickname(), boardId, childrenDTOList);
 
     }
 }

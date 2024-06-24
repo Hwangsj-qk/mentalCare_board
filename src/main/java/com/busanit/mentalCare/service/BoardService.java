@@ -41,6 +41,13 @@ public class BoardService {
         return board.stream().map(Board::toDTO).toList();
     }
 
+    public BoardDTO getBoardById(Long boardId) {
+        Board board = boardRepository.findById(boardId).orElse(null);
+        return board.toDTO();
+    }
+
+
+
 
     // 게시글 생성
     @Transactional

@@ -52,6 +52,16 @@ public class BoardController {
         return ResponseEntity.ok(boards);
     }
 
+    @GetMapping("/{boardId}")
+    public ResponseEntity<BoardDTO> getBoardById(@PathVariable Long boardId) {
+        BoardDTO board= boardService.getBoardById(boardId);
+        if(board == null ) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(board);
+        }
+    }
+
 
     // update (게시글 수정)
     @PutMapping("update/{boardId}")
