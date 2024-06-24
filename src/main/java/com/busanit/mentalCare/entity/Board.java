@@ -76,17 +76,4 @@ public class Board {
                 user.getUserNickname(), boardLikeCount, boardCommentCount, commentDTOList);
     }
 
-//    // 엔티티 -> DTO 변환 메서드
-//    public static Board createBoard(BoardDTO dto) {
-//        Board board = new Board();
-//        board.setBoardId(dto.getBoardId());
-//        board.setBoardTitle(dto.getBoardTitle());
-//        board.setBoardContent(dto.getBoardContent());
-//        board.setBoardTag(dto.getBoardTag());
-//        board.user.setUserNickname(dto.getUserNickname());
-//        board.setBoardTime(dto.getBoardTime());
-//        board.setBoardCommentCount(dto.getBoardCommentCount());
-//        return board;
-//    }
-
 }
