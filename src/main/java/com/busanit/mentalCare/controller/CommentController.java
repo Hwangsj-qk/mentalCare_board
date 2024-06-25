@@ -1,5 +1,6 @@
 package com.busanit.mentalCare.controller;
 
+import com.busanit.mentalCare.dto.BoardDTO;
 import com.busanit.mentalCare.dto.CommentDTO;
 import com.busanit.mentalCare.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,12 @@ public class CommentController {
         List<CommentDTO> allComments = commentService.getAllComments();
         return ResponseEntity.ok(allComments);
     }
+
+    @GetMapping("boardId/{boardId}")
+    public List<CommentDTO> getCommentByBoardId(@PathVariable("boardId") Long boardId) {
+        return commentService.getCommentByBoardId(boardId);
+    }
+
 
 
 

@@ -1,6 +1,7 @@
 package com.busanit.mentalCare.service;
 
 import com.busanit.mentalCare.dto.ChildrenCommentDTO;
+import com.busanit.mentalCare.dto.CommentDTO;
 import com.busanit.mentalCare.entity.ChildrenComment;
 import com.busanit.mentalCare.entity.Comment;
 import com.busanit.mentalCare.entity.User;
@@ -34,6 +35,12 @@ public class ChildrenCommentService {
     public List<ChildrenCommentDTO> getAllChildren() {
         List<ChildrenComment> children = childrenRepository.findAll();
         return children.stream().map(ChildrenComment::toDTO).toList();
+    }
+
+    @Transactional
+    public List<ChildrenCommentDTO> getChildrenByCommentId(Long commentId) {
+        List<ChildrenComment> childrenList = childrenRepository.findByCommentCommentId(commentId);
+        return childrenList.stream().map(ChildrenComment::toDTO).toList();
     }
 
     @Transactional

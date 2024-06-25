@@ -1,6 +1,7 @@
 package com.busanit.mentalCare.controller;
 
 import com.busanit.mentalCare.dto.ChildrenCommentDTO;
+import com.busanit.mentalCare.dto.CommentDTO;
 import com.busanit.mentalCare.service.ChildrenCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,11 @@ public class ChildrenCommentController {
     public ResponseEntity<List<ChildrenCommentDTO>> getAllChildren() {
         List<ChildrenCommentDTO> allChildren = childrenService.getAllChildren();
         return ResponseEntity.ok(allChildren);
+    }
+
+    @GetMapping("commentId/{commentId}")
+    public List<ChildrenCommentDTO> getChildrenByCommentId(@PathVariable("commentId") Long commentId) {
+        return childrenService.getChildrenByCommentId(commentId);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.busanit.mentalCare.service;
 
+import com.busanit.mentalCare.dto.BoardDTO;
 import com.busanit.mentalCare.dto.CommentDTO;
 import com.busanit.mentalCare.entity.Board;
 import com.busanit.mentalCare.entity.Comment;
@@ -33,8 +34,11 @@ public class CommentService {
         return comments.stream().map(Comment::toDTO).toList();
     }
 
-
-
+    @Transactional
+    public List<CommentDTO> getCommentByBoardId(Long boardId) {
+        List<Comment> commentList = commentRepository.findByBoardBoardId(boardId);
+        return commentList.stream().map(Comment::toDTO).toList();
+    }
 
     @Transactional
     public CommentDTO createComment(CommentDTO dto) {
