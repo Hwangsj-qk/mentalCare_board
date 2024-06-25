@@ -18,7 +18,7 @@ import java.util.List;
 public  class CommentDTO {
     private Long commentId;
     private String commentContent;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yy/MM/dd HH:mm")
     private LocalDateTime commentTime;
     private String userNickname;
     private Long boardId;

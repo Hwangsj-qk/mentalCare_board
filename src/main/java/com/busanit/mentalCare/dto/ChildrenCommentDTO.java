@@ -3,6 +3,7 @@ package com.busanit.mentalCare.dto;
 import com.busanit.mentalCare.entity.ChildrenComment;
 import com.busanit.mentalCare.entity.Comment;
 import com.busanit.mentalCare.entity.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 public class ChildrenCommentDTO {
     private Long childrenId;
     private String childrenContent;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yy/MM/dd HH:mm")
     private LocalDateTime childrenTime;
     private String userNickname;
     private Long commentId;
