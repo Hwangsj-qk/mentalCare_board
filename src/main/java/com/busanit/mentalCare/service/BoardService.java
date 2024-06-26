@@ -81,7 +81,6 @@ public class BoardService {
         }
     }
 
-    // 게시글 삭제
     @Transactional
     public Boolean DeleteBoard(Long board_id) {
         Board board = boardRepository.findById(board_id).orElse(null);

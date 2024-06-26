@@ -1,6 +1,5 @@
 package com.busanit.mentalCare.controller;
 
-import com.busanit.mentalCare.dto.BoardDTO;
 import com.busanit.mentalCare.dto.CommentDTO;
 import com.busanit.mentalCare.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +34,11 @@ public class CommentController {
 
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+    public ResponseEntity<List<CommentDTO>> deleteComment(@PathVariable Long commentId) {
         if(!commentService.deleteComment(commentId)) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(commentService.getAllComments());
     }
 
     @GetMapping

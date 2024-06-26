@@ -1,6 +1,5 @@
 package com.busanit.mentalCare.service;
 
-import com.busanit.mentalCare.dto.BoardDTO;
 import com.busanit.mentalCare.dto.CommentDTO;
 import com.busanit.mentalCare.entity.Board;
 import com.busanit.mentalCare.entity.Comment;
@@ -74,9 +73,14 @@ public class CommentService {
     public Boolean deleteComment(Long comment_id) {
         Comment comment = commentRepository.findById(comment_id).orElse(null);
         if(comment != null) {
-            commentRepository.delete(comment);
             int boardCommentCount = comment.getBoard().getBoardCommentCount();
-            comment.getBoard().setBoardCommentCount(boardCommentCount - 1);
+            if(comment.getChildrenComments().isEmpty()) {
+                commentRepository.delete(comment);
+                comment.getBoard().setBoardCommentCount(boardCommentCount - 1);
+            } else {
+                comment.setCommentContent("삭제된 댓글입니다.");
+                comment.getBoard().setBoardCommentCount(boardCommentCount - 1);
+            }
             return true;
         } else {
             return false;

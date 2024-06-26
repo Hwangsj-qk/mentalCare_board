@@ -23,7 +23,7 @@ public  class CommentDTO {
     private String userNickname;
     private Long boardId;
     private List<ChildrenCommentDTO> childrenComments;
-    private boolean isDeleted;
+
 
 
 
@@ -32,7 +32,6 @@ public  class CommentDTO {
                 .commentId(commentId)
                 .commentContent(commentContent)
                 .commentTime(commentTime)
-                .isDeleted(isDeleted)
                 .user(user)
                 .board(board)
                 .build();
