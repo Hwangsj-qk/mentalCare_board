@@ -50,6 +50,9 @@ public class Comment {
     @OneToMany(mappedBy = "comment", orphanRemoval = true)
     private List<ChildrenComment> childrenComments;
 
+    private boolean isDeleted;
+
+
 
     // 엔티티 -> DTO 변환 메서드 (user에 대해서 선생님께 여쭤보기)
     public CommentDTO toDTO() {
@@ -64,7 +67,7 @@ public class Comment {
         if(childrenComments != null) {
             childrenDTOList = childrenComments.stream().map(ChildrenComment::toDTO).toList();
         }
-        return new CommentDTO(commentId, commentContent, commentTime, user.getUserNickname(), boardId, childrenDTOList);
+        return new CommentDTO(commentId, commentContent, commentTime, user.getUserNickname(), boardId, childrenDTOList, isDeleted);
 
     }
 }
