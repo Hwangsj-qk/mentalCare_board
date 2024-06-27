@@ -76,11 +76,13 @@ public class BoardController {
 
     // DELETE (게시글 삭제)
     @DeleteMapping("delete/{boardId}")
-    public ResponseEntity<ResponseEntity<List<BoardDTO>>> deleteBoard(@PathVariable Long boardId) {
-        if(!boardService.DeleteBoard(boardId)) {
+    public ResponseEntity<BoardDTO> deleteBoard(@PathVariable Long boardId) {
+        BoardDTO boardDTO = boardService.DeleteBoard(boardId);
+        if(boardDTO == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(getAllBoards());
+
+        return ResponseEntity.ok(boardDTO);
     }
 
 

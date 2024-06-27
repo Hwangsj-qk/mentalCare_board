@@ -82,13 +82,13 @@ public class BoardService {
     }
 
     @Transactional
-    public Boolean DeleteBoard(Long board_id) {
+    public BoardDTO DeleteBoard(Long board_id) {
         Board board = boardRepository.findById(board_id).orElse(null);
         if(board != null) {
             boardRepository.delete(board);
-            return true;
+            return board.toDTO();
         } else {
-            return false;
+            return null;
         }
     }
 
