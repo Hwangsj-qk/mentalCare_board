@@ -34,11 +34,12 @@ public class CommentController {
 
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<List<CommentDTO>> deleteComment(@PathVariable Long commentId) {
-        if(!commentService.deleteComment(commentId)) {
+    public ResponseEntity<CommentDTO> deleteComment(@PathVariable Long commentId) {
+        CommentDTO commentDTO = commentService.deleteComment(commentId);
+        if(commentDTO == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(commentService.getAllComments());
+        return ResponseEntity.ok(commentDTO);
     }
 
     @GetMapping

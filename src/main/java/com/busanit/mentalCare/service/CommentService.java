@@ -70,7 +70,7 @@ public class CommentService {
     }
 
     @Transactional
-    public Boolean deleteComment(Long comment_id) {
+    public CommentDTO deleteComment(Long comment_id) {
         Comment comment = commentRepository.findById(comment_id).orElse(null);
         if(comment != null) {
             int boardCommentCount = comment.getBoard().getBoardCommentCount();
@@ -81,9 +81,9 @@ public class CommentService {
                 comment.setCommentContent("삭제된 댓글입니다.");
                 comment.getBoard().setBoardCommentCount(boardCommentCount - 1);
             }
-            return true;
+            return comment.toDTO();
         } else {
-            return false;
+            return null;
         }
     }
 
