@@ -1,7 +1,6 @@
 package com.busanit.mentalCare.service;
 
 import com.busanit.mentalCare.dto.ChildrenCommentDTO;
-import com.busanit.mentalCare.dto.CommentDTO;
 import com.busanit.mentalCare.entity.ChildrenComment;
 import com.busanit.mentalCare.entity.Comment;
 import com.busanit.mentalCare.entity.User;
@@ -75,15 +74,15 @@ public class ChildrenCommentService {
     }
 
     @Transactional
-    public Boolean deleteChildren(Long childrenId) {
+    public ChildrenCommentDTO deleteChildren(Long childrenId) {
         ChildrenComment children = childrenRepository.findById(childrenId).orElse(null);
         if(children != null) {
             childrenRepository.delete(children);
             int boardCommentCount = children.getComment().getBoard().getBoardCommentCount();
             children.getComment().getBoard().setBoardCommentCount(boardCommentCount - 1);
-            return true;
+            return children.toDTO();
         } else {
-            return false;
+            return null;
         }
     }
 

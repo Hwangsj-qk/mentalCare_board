@@ -1,7 +1,6 @@
 package com.busanit.mentalCare.controller;
 
 import com.busanit.mentalCare.dto.ChildrenCommentDTO;
-import com.busanit.mentalCare.dto.CommentDTO;
 import com.busanit.mentalCare.service.ChildrenCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,11 +34,12 @@ public class ChildrenCommentController {
 
 
     @DeleteMapping("/{childrenId}")
-    public ResponseEntity<Void> deleteChildren(@PathVariable Long childrenId) {
-        if(!childrenService.deleteChildren(childrenId)) {
+    public ResponseEntity<ChildrenCommentDTO> deleteChildren(@PathVariable Long childrenId) {
+        ChildrenCommentDTO childrenCommentDTO = childrenService.deleteChildren(childrenId);
+        if(childrenCommentDTO == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(childrenCommentDTO);
     }
 
     @GetMapping

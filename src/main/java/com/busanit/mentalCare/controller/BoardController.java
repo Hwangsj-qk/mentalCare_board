@@ -67,7 +67,6 @@ public class BoardController {
     @PutMapping("update/{boardId}")
     public ResponseEntity<BoardDTO> updateBoard(@PathVariable Long boardId, @RequestBody BoardDTO updateBoard) {
         BoardDTO board = boardService.updateBoard(boardId, updateBoard);
-
         if(board == null) {
             return ResponseEntity.notFound().build();
         }
