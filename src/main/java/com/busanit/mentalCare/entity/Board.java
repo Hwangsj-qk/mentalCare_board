@@ -2,6 +2,7 @@ package com.busanit.mentalCare.entity;
 
 import com.busanit.mentalCare.dto.BoardDTO;
 import com.busanit.mentalCare.dto.CommentDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -55,6 +56,7 @@ public class Board {
 
     // 1 대 다 관계 (content - comment) -> 양방향 관계가 아니면 굳이 필요 없음
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Comment> comments;
 
     // 공감 갯수를 담을 필드

@@ -53,9 +53,4 @@ public class CommentController {
         return commentService.getCommentByBoardId(boardId);
     }
 
-
-
-
-
-
 }

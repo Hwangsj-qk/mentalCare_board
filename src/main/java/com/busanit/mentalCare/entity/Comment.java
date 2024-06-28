@@ -2,12 +2,12 @@ package com.busanit.mentalCare.entity;
 
 import com.busanit.mentalCare.dto.ChildrenCommentDTO;
 import com.busanit.mentalCare.dto.CommentDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -44,11 +44,13 @@ public class Comment {
 
     // 다 대 1 관계
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "board_id")
     private Board board;
 
 
     @OneToMany(mappedBy = "comment", orphanRemoval = true)
+    @JsonIgnore
     private List<ChildrenComment> childrenComments;
 
 

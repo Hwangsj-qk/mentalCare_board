@@ -65,15 +65,23 @@ public class BoardService {
     @Transactional
     public BoardDTO updateBoard(Long board_id, BoardDTO updateBoard) {
         Board board = boardRepository.findById(board_id).orElse(null);
+
+        System.out.println("updateboard" + board.getBoardTitle());
         if (board != null) {
             // 게시글 제목 변경
             if (board.getBoardTitle() != null) {
                 board.setBoardTitle(updateBoard.getBoardTitle());
+                System.out.println("board.getBoardTitle() = " + board.getBoardTitle());
             }
             // 게시글 내용 변경
             if (board.getBoardContent() != null) {
                 board.setBoardContent(updateBoard.getBoardContent());
             }
+            // 게시글 테그 변경
+            if(board.getBoardTag() != null) {
+                board.setBoardTag(updateBoard.getBoardTag());
+            }
+            System.out.println("board.getBoardLikeCount() = " + board.getBoardLikeCount());
             // 글 작성자는 바꿀 수 없도록 함
             return boardRepository.save(board).toDTO();
         } else {

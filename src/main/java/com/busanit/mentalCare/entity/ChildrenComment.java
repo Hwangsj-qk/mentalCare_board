@@ -1,6 +1,7 @@
 package com.busanit.mentalCare.entity;
 
 import com.busanit.mentalCare.dto.ChildrenCommentDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +30,7 @@ public class ChildrenComment {
     // @JoinColumn(name = "user_id")
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @Column(name = "children_content")
@@ -40,6 +42,7 @@ public class ChildrenComment {
 
     @ManyToOne
     @JoinColumn(name = "comment_id")
+    @JsonIgnore
     private Comment comment;
 
 

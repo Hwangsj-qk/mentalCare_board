@@ -67,10 +67,11 @@ public class BoardController {
     @PutMapping("update/{boardId}")
     public ResponseEntity<BoardDTO> updateBoard(@PathVariable Long boardId, @RequestBody BoardDTO updateBoard) {
         BoardDTO board = boardService.updateBoard(boardId, updateBoard);
+        // System.out.println("boardId = " + boardId);
         if(board == null) {
             return ResponseEntity.notFound().build();
         }
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(board);
     }
 
     // DELETE (게시글 삭제)

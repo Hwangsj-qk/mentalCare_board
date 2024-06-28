@@ -27,8 +27,4 @@ public class HeartController {
         System.out.println(map);
         return ResponseEntity.ok(map);
     }
-
-
-
-
 }
