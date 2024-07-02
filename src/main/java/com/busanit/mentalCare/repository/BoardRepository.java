@@ -21,4 +21,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findByBoardTag(TagType tag);
 
 
+
+
 }

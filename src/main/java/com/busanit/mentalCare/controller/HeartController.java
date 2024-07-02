@@ -23,8 +23,6 @@ public class HeartController {
         Integer count = heartService.addHeart(boardId, user);
         Map<String, Integer> map = new HashMap<>();
         map.put("count", count);
-        System.out.println(count);
-        System.out.println(map);
         return ResponseEntity.ok(map);
     }
 }

@@ -46,7 +46,6 @@ public class CommentService {
         if(board == null) {
             throw new RuntimeException("존재하지 않은 게시판");
         }
-
         Comment comment = dto.toEntity(board, user);
         int boardCommentCount = comment.getBoard().getBoardCommentCount();
         comment.getBoard().setBoardCommentCount(boardCommentCount + 1);
