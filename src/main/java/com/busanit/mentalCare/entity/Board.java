@@ -47,7 +47,8 @@ public class Board {
     private String calculateTime;
 
     public void setCalculateTime(String calculateTime) {
-        this.calculateTime = Time.getTimeDifference(boardTime, LocalDateTime.now());
+        calculateTime = Time.getTimeDifference(boardTime, LocalDateTime.now());
+        this.calculateTime = calculateTime;
     }
 
     @Column(name = "board_content")
